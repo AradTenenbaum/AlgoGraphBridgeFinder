@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Graph.h"
+#include "Algorithms.h"
 
 using namespace std;
 
@@ -20,6 +21,10 @@ int main()
 
 		graph.addArc(from, to);
 	}
+
+	Algorithms algo = Algorithms();
+	cout << "Graph is " << (algo.isConnectedUndirectionalGraph(graph) ? "connected" : "not connected");
+	Graph* directedGraph = algo.DFSDirectGraph(graph);
 
 	return 0;
 }

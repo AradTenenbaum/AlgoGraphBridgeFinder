@@ -13,6 +13,8 @@ public:
 		setUsed(); 
 		if (reverse != nullptr) reverse->setUsed(); 
 	};
+	bool getUsed() { return isUsed; };
 	void setReverse(Node* _reverse) { reverse = _reverse; };
+	Node* getReverse() { return reverse; };
 	int getValue() { return value; };
 };

@@ -15,20 +15,11 @@ public:
 		}
 	};
 
-	void addArc(int fromValue, int toValue) {
-		if (type == DIRECTIONED) {
-			vertexArr[fromValue - 1]->addNeighbor(new Node(toValue));
-		}
-		else {
-			Node* nodeFrom = new Node(toValue);
-			Node* nodeTo = new Node(fromValue, nodeFrom);
-			vertexArr[fromValue - 1]->addNeighbor(nodeFrom);
-			vertexArr[toValue - 1]->addNeighbor(nodeTo);
-			nodeFrom->setReverse(nodeTo);
-		}
-	}
+	void addArc(int fromValue, int toValue);
 
 	int getSize() { return vertexArr.size(); };
 
 	Vertex* getVertex(int u) { return vertexArr[u - 1]; };
+
+	Graph* getReverseGraph();
 };
