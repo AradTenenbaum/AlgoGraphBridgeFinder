@@ -8,7 +8,7 @@ int main()
 {
 	int n,m;
 	cin >> n;
-	Graph graph = Graph(UNDIRECTIONED, n);
+	Graph graph = Graph(DIRECTIONED, n);
 	cin >> m;
 
 	int from, to;
@@ -23,8 +23,13 @@ int main()
 	}
 
 	Algorithms algo = Algorithms();
+	/*
 	cout << "Graph is " << (algo.isConnectedUndirectionalGraph(graph) ? "connected" : "not connected");
 	Graph* directedGraph = algo.DFSDirectGraph(graph);
+	Graph* reverseGraph = graph.getReverseGraph();
+	*/
+	vector<int> root = algo.DFSStrongConnectedComponents(graph);
+
 
 	return 0;
 }
