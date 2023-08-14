@@ -27,4 +27,6 @@ private:
 	void rootListVISIT(Graph& g, int u, std::vector<COLOR*> Color, std::vector<int>& Root);
 	// The function creates a new color vector to use for each DFS function
 	std::vector<COLOR*> createColorArr(int size);
+	// Free color array
+	void freeColorArray(std::vector<COLOR*> Color);
 };

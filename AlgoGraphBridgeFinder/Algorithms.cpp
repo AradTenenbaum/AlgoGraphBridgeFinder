@@ -14,6 +14,8 @@ Graph* Algorithms::DFSDirectGraph(Graph& g) {
 			directedVISIT(g, i, Color, directedG);
 	}
 
+	freeColorArray(Color);
+
 	return directedG;
 }
 
@@ -29,6 +31,8 @@ vector<int> Algorithms::DFSReturnEndList(Graph& g) {
 		if (*Color[i - 1] == WHITE)
 			endListVISIT(g, i, Color, endList, &currentIndex);
 	}
+
+	freeColorArray(Color);
 
 	return endList;
 }
@@ -48,6 +52,9 @@ vector<int> Algorithms::DFSStrongConnectedComponents(Graph& g) {
 			rootListVISIT(*reverseG, endList[i], Color, Root);
 		}
 	}
+	
+	delete reverseG;
+	freeColorArray(Color);
 
 	return Root;
 }
@@ -71,6 +78,9 @@ bool Algorithms::isConnectedUndirectionalGraph(Graph& g) {
 		if (*Color[i] != BLACK)
 			return false;
 	}
+	
+	freeColorArray(Color);
+
 	return true;
 }
 
@@ -140,5 +150,11 @@ void Algorithms::printBridgesInGraph(Graph& g, vector<int> insertionOrder) {
 	}
 	if (!hasBridge) {
 		cout << "No bridges in graph" << endl;
+	}
+}
+
+void Algorithms::freeColorArray(std::vector<COLOR*> Color) {
+	for (int i = 0; i < Color.size(); i++) {
+		delete Color[i];
 	}
 }

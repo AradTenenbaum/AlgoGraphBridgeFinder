@@ -12,7 +12,6 @@ public:
 	// ctor's.
 	Node(int _value, Node* _reverse) : value(_value), reverse(_reverse), isUsed(false) {};
 	Node(int _value) : value(_value), reverse(nullptr), isUsed(false) {};
-
 	// Set the node arc as used.
 	void setUsed() { isUsed = true; };
 	// Mark the arc and the reverse arc as Used.

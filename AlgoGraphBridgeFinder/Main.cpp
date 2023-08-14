@@ -48,7 +48,9 @@ int main()
 	else {
 		Graph* directedGraph = algo.DFSDirectGraph(graph);
 		algo.printBridgesInGraph(*directedGraph, insertionOrder);
+		delete directedGraph;
 	}
+
 
 	return 0;
 }
