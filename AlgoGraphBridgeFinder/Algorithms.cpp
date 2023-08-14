@@ -4,8 +4,8 @@ using namespace std;
 
 
 Graph* Algorithms::DFSDirectGraph(Graph& g) {
+	// INIT
 	vector<COLOR*> Color = createColorArr(g.getSize());
-
 	Graph* directedG = new Graph(DIRECTIONED, g.getSize());
 
 	// MAIN LOOP
@@ -18,10 +18,10 @@ Graph* Algorithms::DFSDirectGraph(Graph& g) {
 }
 
 vector<int> Algorithms::DFSReturnEndList(Graph& g) {
+	// INIT
 	vector<COLOR*> Color = createColorArr(g.getSize());
 	vector<int> endList;
 	endList.resize(g.getSize());
-
 	int currentIndex = 0;
 
 	// MAIN LOOP
@@ -34,19 +34,15 @@ vector<int> Algorithms::DFSReturnEndList(Graph& g) {
 }
 
 vector<int> Algorithms::DFSStrongConnectedComponents(Graph& g) {
+	// INIT
 	vector<int> endList = DFSReturnEndList(g);
 	Graph* reverseG = g.getReverseGraph();
-
 	vector<COLOR*> Color = createColorArr(g.getSize());
-
 	vector<int> Root;
 	Root.resize(reverseG->getSize());
 
 	// MAIN LOOP
 	for (int i = reverseG->getSize()-1; i >= 0; i--) {
-		//if (Root[endList[i] - 1] == 0) {
-		//	Root[endList[i] - 1] = endList[i];
-		//}
 		if (*Color[endList[i] - 1] == WHITE) {
 			Root[endList[i] - 1] = endList[i];
 			rootListVISIT(*reverseG, endList[i], Color, Root);
@@ -81,7 +77,7 @@ bool Algorithms::isConnectedUndirectionalGraph(Graph& g) {
 void Algorithms::VISIT(Graph& g, int u, vector<COLOR*> Color) {
 	*Color[u - 1] = GREY;
 	
-	for (Node* v : g.getVertex(u)->getNeighbors()) { //לבדוק שלא חוזרים על קשתות פעמיים כשחוזרים מהרקורסיה
+	for (Node* v : g.getVertex(u)->getNeighbors()) { 
 		if (*Color[v->getValue() - 1] == WHITE) {
 			VISIT(g, v->getValue(), Color);
 		}
@@ -131,4 +127,18 @@ void Algorithms::rootListVISIT(Graph& g, int u, vector<COLOR*> Color, vector<int
 	}
 
 	*Color[u - 1] = BLACK;
+}
+
+void Algorithms::printBridgesInGraph(Graph& g, vector<int> insertionOrder) {
+	vector<int> Roots = DFSStrongConnectedComponents(g);
+	bool hasBridge = false;
+	for (int i = 0; i < insertionOrder.size(); i+=2) {
+		if (Roots[insertionOrder[i]-1] != Roots[insertionOrder[i + 1]-1] ) {
+			hasBridge = true;
+			cout << insertionOrder[i] << " " << insertionOrder[i + 1] << endl;
+		}
+	}
+	if (!hasBridge) {
+		cout << "No bridges in graph" << endl;
+	}
 }

@@ -1,3 +1,10 @@
+/*
+Welcome to Algorithms project of Arad Tenenbaum and Lior Barak
+You need to enter the number of vertexes and the number of arcs
+The vertexes are numbered from 1 to the number you entered
+If the graph is not connected you will be notified by the program
+If it is connected the program will print all the bridges in the graph
+*/
 #include <iostream>
 #include "Graph.h"
 #include "Algorithms.h"
@@ -8,28 +15,40 @@ int main()
 {
 	int n,m;
 	cin >> n;
-	Graph graph = Graph(DIRECTIONED, n);
 	cin >> m;
+	if (n <= 0 || m < 0) {
+		cout << "Invalid input" << endl;
+		exit(1);
+	}
+
+	Graph graph = Graph(UNDIRECTIONED, n);
+
+	vector<int> insertionOrder;
+	insertionOrder.resize(2 * m);
+
 
 	int from, to;
 
 	for (int i = 0; i < m; i++) {
-		cout << "from: " << endl;
 		cin >> from;
-		cout << "to: " << endl;
 		cin >> to;
-
+		if (to > n || to < 1 || from > n || from < 1) {
+			cout << "Invalid input" << endl;
+			exit(1);
+		}
+		insertionOrder[2 * i] = from;
+		insertionOrder[(2 * i) + 1] = to;
 		graph.addArc(from, to);
 	}
 
 	Algorithms algo = Algorithms();
-	/*
-	cout << "Graph is " << (algo.isConnectedUndirectionalGraph(graph) ? "connected" : "not connected");
-	Graph* directedGraph = algo.DFSDirectGraph(graph);
-	Graph* reverseGraph = graph.getReverseGraph();
-	*/
-	vector<int> root = algo.DFSStrongConnectedComponents(graph);
-
+	if (!algo.isConnectedUndirectionalGraph(graph)) {
+		cout << "Graph is not connected" << endl;
+	}
+	else {
+		Graph* directedGraph = algo.DFSDirectGraph(graph);
+		algo.printBridgesInGraph(*directedGraph, insertionOrder);
+	}
 
 	return 0;
 }
