@@ -6,10 +6,10 @@ void Graph::addArc(int fromValue, int toValue) {
 		vertexArr[fromValue - 1]->addNeighbor(new Node(toValue));
 	}
 	else {
-		Node* nodeFrom = new Node(toValue);
-		Node* nodeTo = new Node(fromValue, nodeFrom);
-		vertexArr[fromValue - 1]->addNeighbor(nodeFrom);
-		vertexArr[toValue - 1]->addNeighbor(nodeTo);
+		Node* nodeFrom = new Node(fromValue);
+		Node* nodeTo = new Node(toValue, nodeFrom);
+		vertexArr[fromValue - 1]->addNeighbor(nodeTo);
+		vertexArr[toValue - 1]->addNeighbor(nodeFrom);
 		nodeFrom->setReverse(nodeTo);
 	}
 }

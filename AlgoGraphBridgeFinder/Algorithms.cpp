@@ -10,7 +10,8 @@ Graph* Algorithms::DFSDirectGraph(Graph& g) {
 
 	// MAIN LOOP
 	for (int i = 1; i < g.getSize(); i++) {
-		if (*Color[i - 1] == WHITE) directedVISIT(g, i, Color, directedG);
+		if (*Color[i - 1] == WHITE)
+			directedVISIT(g, i, Color, directedG);
 	}
 
 	return directedG;
@@ -25,7 +26,8 @@ vector<int> Algorithms::DFSReturnEndList(Graph& g) {
 
 	// MAIN LOOP
 	for (int i = 1; i < g.getSize(); i++) {
-		if (*Color[i - 1] == WHITE) endListVISIT(g, i, Color, endList, &currentIndex);
+		if (*Color[i - 1] == WHITE)
+			endListVISIT(g, i, Color, endList, &currentIndex);
 	}
 
 	return endList;
@@ -34,6 +36,7 @@ vector<int> Algorithms::DFSReturnEndList(Graph& g) {
 vector<int> Algorithms::DFSStrongConnectedComponents(Graph& g) {
 	vector<int> endList = DFSReturnEndList(g);
 	Graph* reverseG = g.getReverseGraph();
+
 	vector<COLOR*> Color = createColorArr(g.getSize());
 
 	vector<int> Root;
@@ -41,10 +44,11 @@ vector<int> Algorithms::DFSStrongConnectedComponents(Graph& g) {
 
 	// MAIN LOOP
 	for (int i = reverseG->getSize()-1; i >= 0; i--) {
-		if (Root[endList[i] - 1] == 0) {
-			Root[endList[i] - 1] = endList[i];
-		}
+		//if (Root[endList[i] - 1] == 0) {
+		//	Root[endList[i] - 1] = endList[i];
+		//}
 		if (*Color[endList[i] - 1] == WHITE) {
+			Root[endList[i] - 1] = endList[i];
 			rootListVISIT(*reverseG, endList[i], Color, Root);
 		}
 	}
@@ -66,8 +70,10 @@ vector<COLOR*> Algorithms::createColorArr(int size) {
 bool Algorithms::isConnectedUndirectionalGraph(Graph& g) {
 	vector<COLOR*> Color = createColorArr(g.getSize());
 	VISIT(g, 1, Color);
+
 	for (int i = 0; i < g.getSize(); i++) {
-		if (*Color[i] != BLACK) return false;
+		if (*Color[i] != BLACK)
+			return false;
 	}
 	return true;
 }
@@ -75,7 +81,7 @@ bool Algorithms::isConnectedUndirectionalGraph(Graph& g) {
 void Algorithms::VISIT(Graph& g, int u, vector<COLOR*> Color) {
 	*Color[u - 1] = GREY;
 	
-	for (Node* v : g.getVertex(u)->getNeighbors()) {
+	for (Node* v : g.getVertex(u)->getNeighbors()) { //לבדוק שלא חוזרים על קשתות פעמיים כשחוזרים מהרקורסיה
 		if (*Color[v->getValue() - 1] == WHITE) {
 			VISIT(g, v->getValue(), Color);
 		}
