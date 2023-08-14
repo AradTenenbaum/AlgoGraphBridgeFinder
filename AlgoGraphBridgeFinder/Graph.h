@@ -4,6 +4,7 @@
 #include "Utils.h"
 
 class Graph {
+	// Graph type can be Directed and Undirected
 	GRAPH_TYPE type;
 	std::vector<Vertex*> vertexArr;
 
